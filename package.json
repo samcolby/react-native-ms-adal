@@ -14,7 +14,15 @@
     "Active Directory Authentication Library",
     "ios"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samcolby/react-native-ms-adal.git"
+  },
   "author": "Sam Colby",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/samcolby/react-native-ms-adal/issues"
+  },
+  "homepage": "https://github.com/samcolby/react-native-ms-adal#readme"
 
 }
