@@ -24,7 +24,7 @@ import AuthenticationContext from "react-native-ms-adal";
 const authority = "https://login.windows.net/common";
 const resourceUri = "https://graph.windows.net";
 
-const clientId = <your-redirect-url>";
+const clientId = <your-client-id>";
 const redirectUri = <your-redirect-uri>;
 
 
