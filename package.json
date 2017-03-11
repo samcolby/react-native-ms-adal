@@ -1,0 +1,20 @@
+{
+  "name": "react-native-ms-adal",
+  "version": "0.1.0",
+  "description": "React Native Bindings for the Microsoft ADAL library",
+  "main": "RNAdalPlugin",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native",
+    "Microsoft ADAL",
+    "ADAL",
+    "Authentication",
+    "Active Directory Authentication Library",
+    "ios"
+  ],
+  "author": "Sam Colby",
+  "license": "Apache-2.0"
+
+}
