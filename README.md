@@ -2,6 +2,9 @@
 
 This is a currently 'ios only' port of the [Active Directory Authentication Library (ADAL) plugin for Apache Cordova apps](https://github.com/AzureAD/azure-activedirectory-library-for-cordova).
 
+This is alpha software and not everything is tested, but does allow the basic authentication functions and keychain stuff.
+
+Hopefully Microsoft will release an official version soon.
 
 ## Installation
 
