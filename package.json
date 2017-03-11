@@ -1,6 +1,6 @@
 {
   "name": "react-native-ms-adal",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "React Native Bindings for the Microsoft ADAL library",
   "main": "RNAdalPlugin",
   "scripts": {
