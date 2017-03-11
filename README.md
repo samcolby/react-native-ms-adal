@@ -13,7 +13,50 @@ Hopefully Microsoft will release an official version soon.
 3. run `pod install` to pull the ios ADAL library down.
 4. In you react-native project root folder run `react-native link react-native-ms-adal`
 
-At the moment, the following code should get you started.
+At the moment, the following code taken from the cordova api should get you started.
+
+```
+import AuthenticationContext from "react-native-ms-adal";
 
 
-See the linked above cordova library for full instructions on how to configure
+const authority = "https://login.windows.net/common";
+const resourceUri = "https://graph.windows.net";
+
+const clientId = <your-redirect-url>";
+const redirectUri = <your-redirect-uri>;
+
+
+
+// Shows the user authentication dialog box if required
+function authenticate(authCompletedCallback) {
+
+    let context = new AuthenticationContext(authority);
+    context.tokenCache.readItems().then(function (items) {
+        if (items.length > 0) {
+            authority = items[0].authority;
+            context = new AuthenticationContext(authority);
+        }
+        // Attempt to authorize the user silently
+        context.acquireTokenSilentAsync(resourceUri, clientId)
+        .then(authCompletedCallback, function () {
+            // We require user credentials, so this triggers the authentication dialog box
+            context.acquireTokenAsync(resourceUri, clientId, redirectUri)
+            .then(authCompletedCallback, function (err) {
+                error("Failed to authenticate: " + err);
+            });
+        });
+    });
+}
+```
+
+Which can then be called as follows.
+
+```
+authenticate(function(authResponse) {
+        console.log("Token acquired: " + authResponse.accessToken);
+        console.log("Token will expire on: " + authResponse.expiresOn);
+}
+```
+
+
+See the linked above cordova library for full instructions on how to configure the keychain etc in xcode.
