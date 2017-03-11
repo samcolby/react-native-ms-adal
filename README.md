@@ -13,6 +13,8 @@ Hopefully Microsoft will release an official version soon.
 3. run `pod install` to pull the ios ADAL library down.
 4. In you react-native project root folder run `react-native link react-native-ms-adal`
 
+## Usage
+
 At the moment, the following code taken from the cordova api should get you started.
 
 ```
