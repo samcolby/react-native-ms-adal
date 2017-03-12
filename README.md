@@ -57,7 +57,7 @@ Which can then be called as follows.
 authenticate(function(authResponse) {
         console.log("Token acquired: " + authResponse.accessToken);
         console.log("Token will expire on: " + authResponse.expiresOn);
-}
+});
 ```
 
 
