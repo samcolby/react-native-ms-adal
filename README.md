@@ -17,7 +17,7 @@ Hopefully Microsoft will release an official version soon.
 
 At the moment, the following code taken from the cordova api should get you started.
 
-```
+```javascript
 import AuthenticationContext from "react-native-ms-adal";
 
 
@@ -53,7 +53,7 @@ function authenticate(authCompletedCallback) {
 
 Which can then be called as follows.
 
-```
+```javascript
 authenticate(function(authResponse) {
         console.log("Token acquired: " + authResponse.accessToken);
         console.log("Token will expire on: " + authResponse.expiresOn);
