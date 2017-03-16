@@ -44,7 +44,8 @@ RCT_REMAP_METHOD(createAsync,
     //      CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
     //                                                    messageAsDictionary:[RNAdalUtils ADAuthenticationErrorToDictionary:error]];
     //      [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    reject( @"Authentication error", @"There was an authentication error", error );
+    reject( [[NSString alloc] initWithFormat:@"%d", error.code], error.errorDetails, error );
+    
   }
   //  }];
 }
@@ -100,7 +101,7 @@ RCT_REMAP_METHOD(acquireTokenAsync,
          //           [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 
          if ( AD_SUCCEEDED != result.status ) {
-           reject(@"error", @"there was an error", result.error );
+           reject( [[NSString alloc] initWithFormat:@"%d", result.error.code], result.error.errorDetails, result.error );
          } else {
            resolve(msg);
          }
@@ -113,8 +114,7 @@ RCT_REMAP_METHOD(acquireTokenAsync,
     //      CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
     //                                                    messageAsDictionary:[RNAdalUtils ADAuthenticationErrorToDictionary:error]];
     //      [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-
-    reject( @"error", @"there was an error", error );
+    reject( [[NSString alloc] initWithFormat:@"%d", error.code], error.errorDetails, error );
 
   }
   //}];
@@ -161,7 +161,7 @@ RCT_REMAP_METHOD(acquireTokenSilentAsync,
 //                                  RCTLogInfo(@"AD_SUCCEEDED is %u", AD_SUCCEEDED );
 
                                   if ( AD_SUCCEEDED != result.status ) {
-                                    reject(@"error",@"there was an error", result.error);
+                                    reject( [[NSString alloc] initWithFormat:@"%d", result.error.code], result.error.errorDetails, result.error );
                                   } else {
                                     resolve(msg);
                                   }
@@ -173,7 +173,8 @@ RCT_REMAP_METHOD(acquireTokenSilentAsync,
     //      CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
     //                                                    messageAsDictionary:[RNAdalUtils ADAuthenticationErrorToDictionary:error]];
     //      [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    reject( @"error", @"there was an error", error );
+    reject( [[NSString alloc] initWithFormat:@"%d", error.code], error.errorDetails, error );
+    // reject( @"error", @"there was an error", error );
   }
   //  }];
 }
@@ -217,8 +218,8 @@ RCT_REMAP_METHOD(tokenCacheClear,
     //      CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
     //                                                    messageAsDictionary:[CRNAdalUtils ADAuthenticationErrorToDictionary:error]];
     //      [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-
-    reject( @"Error clearing cache", @"There was an error clearing the token cache", error );
+    reject( [[NSString alloc] initWithFormat:@"%d", error.code], error.errorDetails, error );
+    //  reject( @"Error clearing cache", @"There was an error clearing the token cache", error );
   }
   //  }];
 }
@@ -268,7 +269,8 @@ RCT_REMAP_METHOD(tokenCacheReadItems,
     //      CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
     //                                                    messageAsDictionary:[RNAdalUtils ADAuthenticationErrorToDictionary:error]];
     //      [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    reject( @"Error clearing cache", @"There was an error clearing the token cache", error );
+    reject( [[NSString alloc] initWithFormat:@"%d", error.code], error.errorDetails, error );
+    // reject( @"Error clearing cache", @"There was an error clearing the token cache", error );
   }
   //  }];
 }
@@ -348,8 +350,8 @@ RCT_REMAP_METHOD(tokenCacheDeleteItem,
     //      CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
     //                                                    messageAsDictionary:[RNAdalUtils ADAuthenticationErrorToDictionary:error]];
     //      [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-
-    reject( @"Error clearing cache", @"There was an error clearing the token cache", error );
+    reject( [[NSString alloc] initWithFormat:@"%d", error.code], error.errorDetails, error );
+    // reject( @"Error clearing cache", @"There was an error clearing the token cache", error );
   }
   //  }];
 }
