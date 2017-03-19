@@ -26,7 +26,7 @@ See [Active Directory Authentication Library (ADAL) plugin for Apache Cordova ap
 import {MSAdalAuthenticationContext} from "react-native-ms-adal";
 ```
 
-There are also couple of promised based utility functions provided to login and logout functionality. The login method will first try using the acquireTokenSilentAsync function to login using the details stored in the keychain.
+There are also couple of promised based utility functions to provide login and logout functionality. The login method will first try using the acquireTokenSilentAsync function to login using the details stored in the keychain.
 
 ```javascript
 import {MSAdalLogin, MSAdalLogout} from "react-native-ms-adal";
@@ -57,9 +57,9 @@ msAdalPromise.then(authDetails => {
     } else {
       throw new Error("Server returned status: " + response.status + ": " + response.statusText );
     }
-  }).then(json) {
+  }).then(json => {
     // etc
-  }
+  });
 });
 
 msAdalPromise.catch(err => {
