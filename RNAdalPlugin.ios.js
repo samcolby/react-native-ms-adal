@@ -2,6 +2,10 @@
  * @providesModule RNAdalPlugin
  * @flow
  */
-import AuthenticationContext from './msadal/AuthenticationContext';
-
-export default AuthenticationContext;
+import * from "./MSAdal";
+export {
+    getValidMSAdalToken,
+    MSAdalLogin,
+    MSAdalLogout,
+    MSAdalAuthenticationContext
+};
