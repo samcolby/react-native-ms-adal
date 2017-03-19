@@ -47,7 +47,7 @@ function MSAdalLogout(authority, redirectUri) {
   return promise;
 }
 
-export function getValidMSAdalToken(authority) {
+function getValidMSAdalToken(authority) {
   let context = new AuthenticationContext(authority);
   return context.tokenCache.readItems().then(function(items) {
     if (items.length > 0) {
