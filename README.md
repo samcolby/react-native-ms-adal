@@ -73,5 +73,5 @@ msAdalPromise.catch(err => {
 ```
 
 
-See the linked above [cordova library](https://github.com/AzureAD/azure-activedirectory-library-for-cordova) for full instructions on how to configure the keychain etc in xcode.
+See the [Microsoft Azure Active Directory Authentication Library (ADAL) for iOS and OSX](https://github.com/AzureAD/azure-activedirectory-library-for-objc#caching) for full instructions on how to configure the keychain etc in xcode.
 
