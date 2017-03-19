@@ -2,7 +2,13 @@
  * @providesModule RNAdalPlugin
  * @flow
  */
-import * from "./MSAdal";
+import {
+    getValidMSAdalToken,
+    MSAdalLogin,
+    MSAdalLogout,
+    MSAdalAuthenticationContext
+} from "./MSAdal";
+
 export {
     getValidMSAdalToken,
     MSAdalLogin,
