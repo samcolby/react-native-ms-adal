@@ -14,7 +14,7 @@ Hopefully Microsoft will release an official version soon.
 ## Installation
 
 1. Install from npm `npm install --save react-native-ms-adal`
-2. Add the ADAL ios library to your ios/Podfile file.  Create with `pod init` if required `pod 'ADAL', '~> 2.3'`
+2. Add the ADAL ios library to your ios/Podfile file  `pod 'ADAL', '~> 2.3'`.  Create Podfile with `pod init` if required.
 3. Run `pod install` to pull the ios ADAL library down.
 4. In you react-native project root folder run `react-native link react-native-ms-adal`
 
