@@ -37,38 +37,38 @@ const resourceUri = "https://graph.windows.net";
 const clientId = <your-client-id>;
 const redirectUri = <your-redirect-uri>;
 
-const msAdalPromise = MSAdalLogin(
-  authority,
-  clientId,
-  redirectUri,
-  resourceUri
-);
-
-msAdalPromise.then(authDetails => {
-  // Get the data from the server, using the Authorisation Header
-  fetch(<your-url>, {
-    headers: {
-      "Cache-Control": "no-cache",
-      Authorization: "Bearer " + authDetails.accessToken
+const msAdalPromise = MSAdalLogin(authority, clientId, redirectUri, resourceUri)
+  .then(authDetails => {
+    // Get the data from the server, using the Authorisation Header
+    fetch("<your-url>", {
+      headers: {
+        "Cache-Control": "no-cache",
+        Authorization: "Bearer " + authDetails.accessToken
+      }
+    })
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          throw new Error(
+            "Server returned status: " +
+              response.status +
+              ": " +
+              response.statusText
+          );
+        }
+      })
+      .then(json => {
+        // etc
+      });
+  })
+  .catch(err => {
+    if (err.code === "403") {
+      // User has cancelled
+      // We need to make sure the login button is displayed
     }
-  }).then(response => {
-    if (response.status === 200) {
-      return response.json();
-    } else {
-      throw new Error("Server returned status: " + response.status + ": " + response.statusText );
-    }
-  }).then(json => {
-    // etc
+    console.log("Failed to authenticate: " + err);
   });
-});
-
-msAdalPromise.catch(err => {
-  if (err.code === "403") {
-    // User has cancelled
-    // We need to make sure the login button is displayed
-  }
-  console.log("Failed to authenticate: " + err);
-});
 
 ```
 
