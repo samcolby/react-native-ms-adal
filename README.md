@@ -2,7 +2,7 @@
 
 This is a currently an 'ios only' port of the [Active Directory Authentication Library (ADAL) plugin for Apache Cordova apps](https://github.com/AzureAD/azure-activedirectory-library-for-cordova) to work with React Native.
 
-This is alpha software and not everything is tested, but does allow the basic authentication functions and keychain stuff.
+It provides all the basic authentication functions and keychain stuff as per the original cordova library.
 
 Hopefully Microsoft will release an official version soon.
 
