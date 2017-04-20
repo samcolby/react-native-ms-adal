@@ -1,0 +1,4 @@
+rootProject.name = 'adalExample'
+include ':'
+project(':').projectDir = new File(rootProject.projectDir, '../node_modules//android')
+include ':app'

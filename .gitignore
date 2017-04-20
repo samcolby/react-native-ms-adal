@@ -1,3 +1,24 @@
+
+
+/.*
+!/.npmrc
+!/.gitattributes
+!/.npmignore
+!/.gitignore
+!.gitignore
+target
+build
+gradle.properties
+proguard-rules.pro
+BUCK
+keystores
+local.properties
+Pods
+Podfile.lock
+Example.xcworkspace
+node_modules
+yarn.lock
+
 # OSX
 #
 .DS_Store

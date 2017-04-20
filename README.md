@@ -1,6 +1,6 @@
 # react-native-ms-adal
 
-This is a currently an 'ios only' port of the [Active Directory Authentication Library (ADAL) plugin for Apache Cordova apps](https://github.com/AzureAD/azure-activedirectory-library-for-cordova) to work with React Native.
+This is a port of the [Active Directory Authentication Library (ADAL) plugin for Apache Cordova apps](https://github.com/AzureAD/azure-activedirectory-library-for-cordova) to work with React Native.
 
 It provides all the basic authentication functions and keychain stuff as per the original cordova library.
 
@@ -11,12 +11,17 @@ Hopefully Microsoft will release an official version soon.
 1. A working react native project.  Tested on react-native 0.41 and above
 2. A working CocoaPods installation [CocoaPods - Getting Started](https://guides.cocoapods.org/using/getting-started.html)
 
-## Installation
+## Installation iOS
 
 1. Install from npm `npm install --save react-native-ms-adal`
 2. Add the ADAL ios library to your ios/Podfile file  `pod 'ADAL', '~> 2.3'`.  Create Podfile with `pod init` if required.
 3. Run `pod install` to pull the ios ADAL library down.
 4. In you react-native project root folder run `react-native link react-native-ms-adal`
+
+## Installation Android
+
+1. Install from npm `npm install --save react-native-ms-adal`
+2. In you react-native project root folder run `react-native link react-native-ms-adal`
 
 ## Usage Example
 
@@ -75,3 +80,4 @@ const msAdalPromise = MSAdalLogin(authority, clientId, redirectUri, resourceUri)
 
 See the [Microsoft Azure Active Directory Authentication Library (ADAL) for iOS and OSX](https://github.com/AzureAD/azure-activedirectory-library-for-objc#caching) for full instructions on how to configure the keychain etc in xcode.
 
+See the [Microsoft Azure Active Directory Authentication Library (ADAL) for Android](https://github.com/AzureAD/azure-activedirectory-library-for-objc#caching) for full instructions on how to configure necessary permissions in Android.
