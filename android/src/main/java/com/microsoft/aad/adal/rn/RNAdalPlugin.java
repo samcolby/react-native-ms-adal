@@ -50,7 +50,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class RNAdalPlugin extends ReactContextBaseJavaModule {
 
 
-  private static final PromptBehavior SHOW_PROMPT_ALWAYS = PromptBehavior.Always;
+  private static final PromptBehavior SHOW_PROMPT_AUTO = PromptBehavior.Auto;
 
   private static final int GET_ACCOUNTS_PERMISSION_REQ_CODE = 0;
   private static final String PERMISSION_DENIED_ERROR =  "Permissions denied";
@@ -149,7 +149,7 @@ public class RNAdalPlugin extends ReactContextBaseJavaModule {
       }
     }
     authContext.acquireToken(getCurrentActivity(), resourceUrl, clientId, redirectUrl,
-            userId, SHOW_PROMPT_ALWAYS, extraQueryParams, new RNDefaultAuthenticationCallback(promise));
+            userId, SHOW_PROMPT_AUTO, extraQueryParams, new RNDefaultAuthenticationCallback(promise));
   }
 
   @ReactMethod

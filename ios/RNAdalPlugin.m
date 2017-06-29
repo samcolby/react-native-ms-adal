@@ -45,7 +45,7 @@ RCT_REMAP_METHOD(createAsync,
     //                                                    messageAsDictionary:[RNAdalUtils ADAuthenticationErrorToDictionary:error]];
     //      [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     reject( [[NSString alloc] initWithFormat:@"%d", error.code], error.errorDetails, error );
-    
+
   }
   //  }];
 }
@@ -90,7 +90,7 @@ RCT_REMAP_METHOD(acquireTokenAsync,
        acquireTokenWithResource:resourceId
        clientId:clientId
        redirectUri:urlRedirectUri
-       promptBehavior:AD_PROMPT_ALWAYS
+       promptBehavior:AD_PROMPT_AUTO
        userId:userId
        extraQueryParameters:extraQueryParameters
        completionBlock:^(ADAuthenticationResult *result) {
