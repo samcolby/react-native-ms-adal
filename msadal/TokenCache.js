@@ -7,11 +7,8 @@
 import {
   NativeModules
 } from 'react-native';
+import TokenCacheItem from './TokenCacheItem';
 const RNAdalPlugin = NativeModules.RNAdalPlugin;
-
-
-var TokenCacheItem = require('./TokenCacheItem');
-var Deferred = require('./utility').Utility.Deferred;
 
 /**
  * Token cache class used by {AuthenticationContext} to store access and refresh tokens.
@@ -35,22 +32,16 @@ TokenCache.prototype.clear = function () {
  * @returns {Promise} Promise either fulfilled with array of cached items or rejected with error.
  */
 TokenCache.prototype.readItems = function () {
-
-    var result = [];
-
-    var d = new Deferred();
-
-    RNAdalPlugin.tokenCacheReadItems( this.authContext.authority, this.authContext.validateAuthority )
-    .then(function (tokenCacheItems) {
-        tokenCacheItems.forEach(function (item) {
-            result.push(new TokenCacheItem(item));
-        });
-        d.resolve(result);
-    }, function(err) {
-        d.reject(err);
-    });
-
-    return d;
+    return new Promise((resolve, reject) => {
+        RNAdalPlugin.tokenCacheReadItems( this.authContext.authority, this.authContext.validateAuthority )
+            .then(function (tokenCacheItems) {
+                var result = [];
+                tokenCacheItems.forEach(function (item) {
+                    result.push(new TokenCacheItem(item));
+                });
+                resolve(result);
+            }, reject);
+      });
 };
 
 /**
@@ -61,25 +52,13 @@ TokenCache.prototype.readItems = function () {
  * @returns {Promise} Promise either fulfilled when operation is completed or rejected with error.
  */
 TokenCache.prototype.deleteItem = function (item) {
-
-    var args = [
-        this.authContext.authority,
-        this.authContext.validateAuthority,
-        item.authority,
-        item.resource,
-        item.clientId,
-        item.userInfo && item.userInfo.userId,
-        item.isMultipleResourceRefreshToken
-    ];
-
     return RNAdalPlugin.tokenCacheDeleteItem(
         this.authContext.authority,
         this.authContext.validateAuthority,
         item.authority,
         item.resource,
         item.clientId,
-        item.userInfo && item.userInfo.userId,
-        item.isMultipleResourceRefreshToken
+        item.userInfo && item.userInfo.userId
     );
 };
 

@@ -4,7 +4,7 @@
 
 /*global module, require*/
 
-var UserInfo = require('./UserInfo');
+import UserInfo from './UserInfo';
 
 /**
  * Represents the result token acquisition operation.
@@ -20,15 +20,7 @@ function AuthenticationResult(authResult) {
     this.tenantId = authResult.tenantId;
 
     var jwtToken = authResult.idToken || authResult.accessToken;
-    this.userInfo = null;
-
-    if (jwtToken) {
-        this.userInfo = UserInfo.fromJWT(jwtToken);
-    }
-
-    if (!this.userInfo) {
-        this.userInfo = new UserInfo(authResult.userInfo);
-    }
+    this.userInfo = new UserInfo(authResult.userInfo);
 }
 
 /**
@@ -37,7 +29,7 @@ function AuthenticationResult(authResult) {
  * @returns {String} The authorization header.
  */
 AuthenticationResult.prototype.createAuthorizationHeader = function() {
-     return "Bearer " + this.accessToken;
+    return "Bearer " + this.accessToken;
 };
 
 module.exports = AuthenticationResult;

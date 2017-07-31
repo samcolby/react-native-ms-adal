@@ -7,13 +7,10 @@
 import {
   NativeModules
 } from 'react-native';
+import AuthenticationResult from './AuthenticationResult';
+import TokenCache from './TokenCache';
+
 const RNAdalPlugin = NativeModules.RNAdalPlugin;
-
-var Deferred = require('./utility').Utility.Deferred;
-var AuthenticationResult = require('./AuthenticationResult');
-var TokenCache = require('./TokenCache');
-
-
 
 /**
  * Constructs context to use with known authority to get the token. It reuses existing context
@@ -49,20 +46,15 @@ export default function AuthenticationContext(authority, validateAuthority) {
  * @returns {Promise}  Promise either fulfilled with newly created authentication context or rejected with error
  */
 AuthenticationContext.createAsync = function (authority, validateAuthority) {
+    return new Promise((resolve, reject) => {
+        if (validateAuthority !== false) {
+            validateAuthority = true;
+        }
 
-    var d = new Deferred();
-
-    if (validateAuthority !== false) {
-        validateAuthority = true;
-    }
-
-    RNAdalPlugin.createAsync( authority, validateAuthority ).then(function () {
-        d.resolve(new AuthenticationContext(authority, validateAuthority));
-    }, function(err) {
-        d.reject(err);
-    });
-
-    return d;
+        RNAdalPlugin.createAsync( authority, validateAuthority ).then(function () {
+            resolve(new AuthenticationContext(authority, validateAuthority));
+        }, reject);
+      });
 };
 
 /**
@@ -79,19 +71,13 @@ AuthenticationContext.createAsync = function (authority, validateAuthority) {
  * @returns {Promise} Promise either fulfilled with AuthenticationResult object or rejected with error
  */
 AuthenticationContext.prototype.acquireTokenAsync = function (resourceUrl, clientId, redirectUrl, userId, extraQueryParameters) {
-
-    var d = new Deferred();
-
-
-    RNAdalPlugin.acquireTokenAsync( this.authority, this.validateAuthority, resourceUrl, clientId, redirectUrl,
-        userId, extraQueryParameters )
-    .then(function(authResult){
-        d.resolve(new AuthenticationResult(authResult));
-    }, function(err) {
-        d.reject(err);
+    return new Promise((resolve, reject) => {
+      RNAdalPlugin.acquireTokenAsync( this.authority, this.validateAuthority, resourceUrl, clientId, redirectUrl,
+      userId, extraQueryParameters )
+      .then(function(authResult){
+          resolve(new AuthenticationResult(authResult));
+      }, reject);
     });
-
-    return d;
 };
 
 /**
@@ -106,16 +92,10 @@ AuthenticationContext.prototype.acquireTokenAsync = function (resourceUrl, clien
  * @returns {Promise} Promise either fulfilled with AuthenticationResult object or rejected with error
  */
 AuthenticationContext.prototype.acquireTokenSilentAsync = function (resourceUrl, clientId, userId) {
-
-    var d = new Deferred();
-
-     RNAdalPlugin.acquireTokenSilentAsync( this.authority, this.validateAuthority, resourceUrl, clientId, userId )
-    .then(function(authResult){
-        d.resolve(new AuthenticationResult(authResult));
-    }, function(err) {
-        d.reject(err);
+    return new Promise((resolve, reject) => {
+        RNAdalPlugin.acquireTokenSilentAsync(this.authority, this.validateAuthority, resourceUrl, clientId, userId)
+            .then(function(authResult){
+                resolve(new AuthenticationResult(authResult));
+            }, reject);
     });
-
-    return d;
 };
-
