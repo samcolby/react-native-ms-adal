@@ -2,10 +2,6 @@
 
 // Modifications by Sam Colby to work with React Native instead of Cordova
 
-/*global module, require*/
-
-var UserInfo = require('./UserInfo');
-
 /**
  * Represents token cache item.
  */
@@ -21,8 +17,7 @@ function TokenCacheItem(cacheItem) {
     this.isMultipleResourceRefreshToken = cacheItem.isMultipleResourceRefreshToken;
     this.resource = cacheItem.resource;
     this.tenantId = cacheItem.tenantId;
-
-    this.userInfo = cacheItem.idToken ? UserInfo.fromJWT(cacheItem.idToken) : null;
+    this.userInfo =  cacheItem.userInfo;
 }
 
 module.exports = TokenCacheItem;

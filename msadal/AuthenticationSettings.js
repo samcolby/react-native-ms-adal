@@ -10,11 +10,7 @@ import {
 } from 'react-native';
 const RNAdalPlugin = NativeModules.RNAdalPlugin;
 
-
-var Deferred = require('./utility').Utility.Deferred;
-
 module.exports = {
-
     /**
      * Sets flag to use or skip authentication broker.
      * By default, the flag value is false and ADAL will not talk to broker.
@@ -24,14 +20,9 @@ module.exports = {
      * @returns {Promise}  Promise either fulfilled or rejected with error
      */
     setUseBroker: function(useBroker) {
-
         if (cordova.platformId === 'android') {
         //    return RNAdalPlugin.setUseBroker( !!useBroker );
         }
-
-        // Broker is handled by system on Windows/iOS
-        var deferred = new Deferred();
-        deferred.resolve();
-        return deferred;
+        return Promise.resolve();
     }
 }
