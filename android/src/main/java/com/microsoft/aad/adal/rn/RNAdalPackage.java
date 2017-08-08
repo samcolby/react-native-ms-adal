@@ -29,7 +29,7 @@ public class RNAdalPackage implements ReactPackage {
         return modules;
     }
 
-    @Override
+    // deprecated
     public List<Class<? extends JavaScriptModule>> createJSModules() {
         return Collections.emptyList();
     }
