@@ -23,6 +23,23 @@ Hopefully Microsoft will release an official version soon.
 1. Install from npm `npm install --save react-native-ms-adal`
 2. In you react-native project root folder run `react-native link react-native-ms-adal`
 
+## Installation Windows UWP (Experimental)
+
+1. Install from npm `npm install --save react-native-ms-adal`
+2. Open windows/{projectname}.sln
+3. Add '../node_modules/react-native-ms-adal/uwp/ReactNativeMSAdal.csproj' to the solution
+4. Add `new ReactNativeMSAdal.ReactNativeMSAdalPackage()` to the packages list in MainPage.cs
+
+__Notes:__ the UWP implementation is a wrapper for WebAuthenticationCoreManager instead of ADAL and has therefore not implenented direct access to the tokenCache since that is not accessible from that API. `MSAdalLogin()` and `MSAdalLogout()` will therefor not work, use the msadal/AuthenticationContext.js directly instead: `import AuthenticationContext from 'react-native-ms-adal/msadal/AuthenticationContext'`
+
+## Installation Windows WPF (Experimental)
+
+1. Install from npm `npm install --save react-native-ms-adal`
+2. Open windows/{projectname}.sln
+3. Add '../node_modules/react-native-ms-adal/wpf/ReactNativeMSAdal.Net46.csproj' to the solution
+4. Add '''new ReactNativeMSAdal.ReactNativeMSAdalPackage()''' to the packages list in MainPage.cs
+
+
 ## Usage Example
 
 See [Active Directory Authentication Library (ADAL) plugin for Apache Cordova apps](https://github.com/AzureAD/azure-activedirectory-library-for-cordova) for details on how to use the AuthenticationContext.  This library renames this to MSAdalAuthenticationContext, which can be imported as follows
@@ -78,6 +95,6 @@ const msAdalPromise = MSAdalLogin(authority, clientId, redirectUri, resourceUri)
 ```
 
 
-See the [Microsoft Azure Active Directory Authentication Library (ADAL) for iOS and OSX](https://github.com/AzureAD/azure-activedirectory-library-for-objc#caching) for full instructions on how to configure the keychain etc in xcode.
+See the [Microsoft Azure Active Directory Authentication Library (ADAL) for iOS and OSX](https://github.com/AzureAD/azure-activedirectory-library-for-objc) for full instructions on how to configure the keychain etc in xcode.
 
-See the [Microsoft Azure Active Directory Authentication Library (ADAL) for Android](https://github.com/AzureAD/azure-activedirectory-library-for-objc#caching) for full instructions on how to configure necessary permissions in Android.
+See the [Microsoft Azure Active Directory Authentication Library (ADAL) for Android](https://github.com/AzureAD/azure-activedirectory-library-for-android) for full instructions on how to configure necessary permissions in Android.

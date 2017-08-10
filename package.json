@@ -12,7 +12,10 @@
     "ADAL",
     "Authentication",
     "Active Directory Authentication Library",
-    "ios"
+    "ios",
+    "android",
+    "windows",
+    "uwp"
   ],
   "repository": {
     "type": "git",
@@ -23,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/samcolby/react-native-ms-adal/issues"
   },
-  "homepage": "https://github.com/samcolby/react-native-ms-adal#readme"
+  "homepage": "https://github.com/samcolby/react-native-ms-adal#readme",
+  "peerDependencies": {
+    "react-native-windows": "*"
+  }
 }
