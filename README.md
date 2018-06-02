@@ -4,6 +4,11 @@ This is a port of the [Active Directory Authentication Library (ADAL) plugin for
 
 It provides all the basic authentication functions and keychain stuff as per the original cordova library.
 
+See the [Microsoft Azure Active Directory Authentication Library (ADAL) for iOS and OSX](https://github.com/AzureAD/azure-activedirectory-library-for-objc) for full instructions on how to configure the keychain etc in xcode.
+
+See the [Microsoft Azure Active Directory Authentication Library (ADAL) for Android](https://github.com/AzureAD/azure-activedirectory-library-for-android) for full instructions on how to configure necessary permissions in Android.
+
+
 Hopefully Microsoft will release an official version soon.
 
 ## Prerequisites
@@ -94,7 +99,3 @@ const msAdalPromise = MSAdalLogin(authority, clientId, redirectUri, resourceUri)
 
 ```
 
-
-See the [Microsoft Azure Active Directory Authentication Library (ADAL) for iOS and OSX](https://github.com/AzureAD/azure-activedirectory-library-for-objc) for full instructions on how to configure the keychain etc in xcode.
-
-See the [Microsoft Azure Active Directory Authentication Library (ADAL) for Android](https://github.com/AzureAD/azure-activedirectory-library-for-android) for full instructions on how to configure necessary permissions in Android.
