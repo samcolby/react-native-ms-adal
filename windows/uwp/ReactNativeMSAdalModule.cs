@@ -30,6 +30,14 @@ namespace ReactNativeMSAdal
             return await WebAuthenticationCoreManager.FindAccountProviderAsync("https://login.microsoft.com", authority);
         }
 
+        async private Task<WebAccount> TryGetUserAccount(WebAccountProvider provider)
+        {
+            string accountId = Windows.Storage.ApplicationData.Current.LocalSettings.Values["CurrentUserId"]?.ToString();
+            if (string.IsNullOrEmpty(accountId)) return null;
+
+            return await WebAuthenticationCoreManager.FindAccountAsync(provider, accountId);
+        }
+
         [ReactMethod]
         async public void createAsync(string authority, bool validateAuthority, IPromise promise)
         {
@@ -72,15 +80,27 @@ namespace ReactNativeMSAdal
             {
                 try
                 {
+                    WebAccount account = await TryGetUserAccount(authContext);
                     WebTokenRequest wtr = new WebTokenRequest(authContext, "", clientId, WebTokenRequestPromptType.Default);
                     wtr.Properties.Add("resource", resourceUrl);
-
-                    WebTokenRequestResult wtrr = await WebAuthenticationCoreManager.RequestTokenAsync(wtr);
-                    // WebAccount userAccount;
+                    WebTokenRequestResult wtrr;
+                    if (account != null)
+                    {
+                        wtrr = await WebAuthenticationCoreManager.RequestTokenAsync(wtr, account);
+                    } else
+                    {
+                        wtrr = await WebAuthenticationCoreManager.RequestTokenAsync(wtr);
+                    }
+                     
                     if (wtrr.ResponseStatus == WebTokenRequestStatus.Success)
                     {
                         WebTokenResponse response = wtrr.ResponseData[0];
-
+                        account = wtrr.ResponseData[0].WebAccount;
+                        if(!string.IsNullOrEmpty(account?.Id))
+                        {
+                            // store the user's account id so it can be used in successive requests
+                            Windows.Storage.ApplicationData.Current.LocalSettings.Values["CurrentUserId"] = account.Id;
+                        }
                         var props = new Dictionary<string, string>(response.Properties);
                         
                         AuthenticationResult result = new AuthenticationResult(response.Token, props);
@@ -120,19 +140,29 @@ namespace ReactNativeMSAdal
                 promise.Reject(ex);
                 return;
             }
-
+                    
             try
             {
+                WebAccount account = await TryGetUserAccount(authContext);
                 WebTokenRequest wtr = new WebTokenRequest(authContext, "", clientId, WebTokenRequestPromptType.Default);
                 wtr.Properties.Add("resource", resourceUrl);
 
-                WebTokenRequestResult wtrr = await WebAuthenticationCoreManager.GetTokenSilentlyAsync(wtr);
+                WebTokenRequestResult wtrr;
+                if (account != null)
+                {
+                    wtrr = await WebAuthenticationCoreManager.GetTokenSilentlyAsync(wtr, account);
+                }
+                else
+                {
+                    wtrr = await WebAuthenticationCoreManager.GetTokenSilentlyAsync(wtr);
+                }
 
                 if (wtrr.ResponseStatus == WebTokenRequestStatus.Success)
                 {
                     WebTokenResponse response = wtrr.ResponseData[0];
 
-                    var props = new Dictionary<string, string>(response.Properties);
+                    // use case insensitive prop names as keys (i.e. upn = UPN)
+                    var props = new Dictionary<string, string>(response.Properties, StringComparer.OrdinalIgnoreCase);
 
                     AuthenticationResult result = new AuthenticationResult(response.Token, props);
 

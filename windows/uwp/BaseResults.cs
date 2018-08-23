@@ -20,9 +20,10 @@ namespace ReactNativeMSAdal
             }
             else if (typeof(T) == typeof(DateTimeOffset))
             {
-                DateTimeOffset dt;
-                if (DateTimeOffset.TryParse(props[propName], out dt))
+                long ts;
+                if (long.TryParse(props[propName], out ts))
                 {
+                    DateTimeOffset dt = DateTimeOffset.FromUnixTimeSeconds(ts);
                     setOutput((T)Convert.ChangeType(dt, typeof(T)));
                 }
             }
