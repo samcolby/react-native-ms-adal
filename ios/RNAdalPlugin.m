@@ -194,7 +194,11 @@ RCT_REMAP_METHOD(tokenCacheClear,
   {
     ADAuthenticationError *error;
 
+#if TARGET_OS_IPHONE
     ADKeychainTokenCache* cacheStore = [ADKeychainTokenCache new];
+#else
+    ADTokenCache* cacheStore = [ADTokenCache new];
+#endif
 
     NSArray *cacheItems = [cacheStore allItems:&error];
 
@@ -239,7 +243,11 @@ RCT_REMAP_METHOD(tokenCacheReadItems,
   {
     ADAuthenticationError *error;
 
+#if TARGET_OS_IPHONE
     ADKeychainTokenCache* cacheStore = [ADKeychainTokenCache new];
+#else
+    ADTokenCache* cacheStore = [ADTokenCache new];
+#endif
 
     //get all items from cache
     NSArray *cacheItems = [cacheStore allItems:&error];
@@ -307,7 +315,11 @@ RCT_REMAP_METHOD(tokenCacheDeleteItem,
     userId = [RNAdalUtils mapUserIdToUserName:authContext
                                             userId:userId];
 
+#if TARGET_OS_IPHONE
     ADKeychainTokenCache* cacheStore = [ADKeychainTokenCache new];
+#else
+    ADTokenCache* cacheStore = [ADTokenCache new];
+#endif
 
     //get all items from cache
     NSArray *cacheItems = [cacheStore allItems:&error];

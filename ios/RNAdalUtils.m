@@ -91,7 +91,11 @@ static id ObjectOrNull(id object)
   {
     ADAuthenticationError *error;
 
+#if TARGET_OS_IPHONE
     ADKeychainTokenCache* cacheStore = [ADKeychainTokenCache new];
+#else
+    ADTokenCache* cacheStore = [ADTokenCache new];
+#endif
     NSArray *cacheItems = [cacheStore allItems:&error];
 
     if (error == nil)
