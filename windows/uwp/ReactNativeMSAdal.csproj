@@ -103,10 +103,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="project.json" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="AuthenticationResult.cs" />
     <Compile Include="BaseResults.cs" />
     <Compile Include="ReactNativeMSAdalModule.cs" />
