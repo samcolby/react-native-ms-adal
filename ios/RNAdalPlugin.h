@@ -10,8 +10,16 @@
 
 #import "React/RCTBridgeModule.h"
 
+#if !TARGET_OS_IPHONE
+#import <ADAL/ADTokenCache.h>
+#endif
+
 // Implements react-native plugin for Microsoft Azure ADAL
 @interface RNAdalPlugin : NSObject <RCTBridgeModule>
+
+#if !TARGET_OS_IPHONE
++ (void)setTokenCacheDelegate:(id<ADTokenCacheDelegate>) delegate;
+#endif
 
 // AuthenticationContext methods
 //- (void)createAsync:(CDVInvokedUrlCommand *)command;

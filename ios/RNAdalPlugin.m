@@ -17,6 +17,14 @@
 
 RCT_EXPORT_MODULE();
 
+#if !TARGET_OS_IPHONE
+static id<ADTokenCacheDelegate> tokenCacheDelegate = nil;
+
++ (void)setTokenCacheDelegate:(id<ADTokenCacheDelegate>) delegate
+{
+    tokenCacheDelegate = delegate;
+}
+#endif
 
 RCT_REMAP_METHOD(createAsync,
                  authority:(NSString *)authority
@@ -384,9 +392,17 @@ static NSMutableDictionary *existingContexts = nil;
   {
     ADAuthenticationError *error;
 
-    authContext = [ADAuthenticationContext authenticationContextWithAuthority:authority
-                                                            validateAuthority:validate
-                                                                        error:&error];
+#if TARGET_OS_IPHONE
+      authContext = [ADAuthenticationContext authenticationContextWithAuthority:authority
+                                                              validateAuthority:validate
+                                                                          error:&error];
+#else
+      authContext = [[ADAuthenticationContext alloc] initWithAuthority:authority
+                                                     validateAuthority:validate
+                                                         cacheDelegate:tokenCacheDelegate
+                                                                 error:&error];
+#endif
+
     if (error != nil)
     {
       @throw(error);
