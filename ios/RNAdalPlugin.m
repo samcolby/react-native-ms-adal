@@ -98,7 +98,7 @@ RCT_REMAP_METHOD(acquireTokenAsync,
        acquireTokenWithResource:resourceId
        clientId:clientId
        redirectUri:urlRedirectUri
-       promptBehavior:(userId != nil ? AD_PROMPT_ALWAYS : AD_PROMPT_AUTO)
+       promptBehavior:(userId != nil ? AD_PROMPT_AUTO : AD_PROMPT_ALWAYS)
        userId:userId
        extraQueryParameters:extraQueryParameters
        completionBlock:^(ADAuthenticationResult *result) {
