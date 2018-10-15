@@ -17,6 +17,14 @@
 
 RCT_EXPORT_MODULE();
 
+#if !TARGET_OS_IPHONE
+static id<ADTokenCacheDelegate> tokenCacheDelegate = nil;
+
++ (void)setTokenCacheDelegate:(id<ADTokenCacheDelegate>) delegate
+{
+    tokenCacheDelegate = delegate;
+}
+#endif
 
 RCT_REMAP_METHOD(createAsync,
                  authority:(NSString *)authority
@@ -90,7 +98,7 @@ RCT_REMAP_METHOD(acquireTokenAsync,
        acquireTokenWithResource:resourceId
        clientId:clientId
        redirectUri:urlRedirectUri
-       promptBehavior:AD_PROMPT_AUTO
+       promptBehavior:(userId != nil ? AD_PROMPT_AUTO : AD_PROMPT_ALWAYS)
        userId:userId
        extraQueryParameters:extraQueryParameters
        completionBlock:^(ADAuthenticationResult *result) {
@@ -194,7 +202,11 @@ RCT_REMAP_METHOD(tokenCacheClear,
   {
     ADAuthenticationError *error;
 
+#if TARGET_OS_IPHONE
     ADKeychainTokenCache* cacheStore = [ADKeychainTokenCache new];
+#else
+    ADTokenCache* cacheStore = [ADTokenCache new];
+#endif
 
     NSArray *cacheItems = [cacheStore allItems:&error];
 
@@ -239,7 +251,11 @@ RCT_REMAP_METHOD(tokenCacheReadItems,
   {
     ADAuthenticationError *error;
 
+#if TARGET_OS_IPHONE
     ADKeychainTokenCache* cacheStore = [ADKeychainTokenCache new];
+#else
+    ADTokenCache* cacheStore = [ADTokenCache new];
+#endif
 
     //get all items from cache
     NSArray *cacheItems = [cacheStore allItems:&error];
@@ -307,7 +323,11 @@ RCT_REMAP_METHOD(tokenCacheDeleteItem,
     userId = [RNAdalUtils mapUserIdToUserName:authContext
                                             userId:userId];
 
+#if TARGET_OS_IPHONE
     ADKeychainTokenCache* cacheStore = [ADKeychainTokenCache new];
+#else
+    ADTokenCache* cacheStore = [ADTokenCache new];
+#endif
 
     //get all items from cache
     NSArray *cacheItems = [cacheStore allItems:&error];
@@ -372,9 +392,17 @@ static NSMutableDictionary *existingContexts = nil;
   {
     ADAuthenticationError *error;
 
-    authContext = [ADAuthenticationContext authenticationContextWithAuthority:authority
-                                                            validateAuthority:validate
-                                                                        error:&error];
+#if TARGET_OS_IPHONE
+      authContext = [ADAuthenticationContext authenticationContextWithAuthority:authority
+                                                              validateAuthority:validate
+                                                                          error:&error];
+#else
+      authContext = [[ADAuthenticationContext alloc] initWithAuthority:authority
+                                                     validateAuthority:validate
+                                                         cacheDelegate:tokenCacheDelegate
+                                                                 error:&error];
+#endif
+
     if (error != nil)
     {
       @throw(error);
